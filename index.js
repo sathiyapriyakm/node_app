@@ -1,5 +1,6 @@
 const express = require('express')
-const app = express()
+const app = express();
+const PORT= 4000;
 const movies=[
 
     {
@@ -69,6 +70,7 @@ const movies=[
     }
     ]
 
+
 app.get('/', function (req, res) {
   res.send('Hello World')
 })
@@ -82,4 +84,4 @@ app.get('/movies', function (req, res) {
     movie?res.send(movie):res.send({msg:"movie not found"});
   })
 
-app.listen(3000)
+app.listen(PORT)
