@@ -79,7 +79,7 @@ app.get('/movies', function (req, res) {
     res.send(movies)
   })
   app.get('/movies/:id', function (req, res) {
-      const {id}=req.params;
+      const {id} = req.params;
       const movie=movies.find((mv)=>mv.id===id);
     movie?res.send(movie):res.send({msg:"movie not found"});
   })
