@@ -4,6 +4,7 @@
 import express from 'express';
 import { MongoClient } from 'mongodb';
 import dotenv from "dotenv";
+import { request } from 'express';
 
 dotenv.config();
 
@@ -99,10 +100,13 @@ app.get('/', function (req, res) {
 })
 
 //cursor - Pagination | cursor --> Array | toArray()
-app.get('/movies', async function (req, res) {
+app.get('/movies', async function (request, response) {
   //db.movies.find({});
-  const movies= await client.db("guvi-node-app").collection("movies").find({}).toArray();
-    res.send(movies);
+  if(request.query.rating){
+    request.query.rating = +request.query.rating;
+  }
+  const movies= await client.db("guvi-node-app").collection("movies").find(request.query).toArray();
+  response.send(movies);
   })
 
 app.get('/movies/:id', async function (req, res) {
