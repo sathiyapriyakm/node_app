@@ -4,8 +4,7 @@
 import express from 'express';
 import { MongoClient } from 'mongodb';
 import dotenv from "dotenv";
-import { request } from 'express';
-
+import {moviesRouter} from "./routes/movies.js";
 dotenv.config();
 
 const app = express();
@@ -92,54 +91,13 @@ const PORT= process.env.PORT;
       return client;
     }
 
-const client=await createConnection();
+export const client=await createConnection();
 
 
 app.get('/', function (req, res) {
   res.send('Hello, Welcome to the APP')
 })
+app.use("/movies",moviesRouter);
 
 //cursor - Pagination | cursor --> Array | toArray()
-app.get('/movies', async function (request, response) {
-  //db.movies.find({});
-  if(request.query.rating){
-    request.query.rating = +request.query.rating;
-  }
-  const movies= await client.db("guvi-node-app").collection("movies").find(request.query).toArray();
-  response.send(movies);
-  })
-
-app.get('/movies/:id', async function (req, res) {
-const {id} = req.params;
-console.log("id is : ", id);
-      // const movie=movies.find((mv)=>mv.id===id);
-const movie= await client.db("guvi-node-app").collection("movies").findOne({id:id});
-console.log(movie);
-movie?res.send(movie):res.status(404).send({msg:"movie not found"});
-  })
-
-  app.delete('/movies/:id', async function (req, res) {
-    const {id} = req.params;
-          // const movie=movies.find((mv)=>mv.id===id);
-    const result= await client.db("guvi-node-app").collection("movies").deleteOne({id:id});
-    result.deletedCount>0?res.send({msg:"movie deleted successfully"}):res.status(404).send({msg:"movie not found"});
-      })
-
-app.put('/movies/:id', async function (req, res) {
-  const {id} = req.params;
-  const data=req.body;
-        // const movie=movies.find((mv)=>mv.id===id);
-  const result= await client.db("guvi-node-app").collection("movies").updateOne({id:id},{$set:data});
-  res.send(result);
-    })
-
-// express.json() is a inbuilt middleware to convert data inside body to json format.
-app.post('/movies',async function (req, res) {
-  const data=req.body;
-  console.log(data);
-  //db.movies.insertMany(data);
-  const result=await client.db("guvi-node-app").collection("movies").insertMany(data);
-    res.send(result);
-  })
-
 app.listen(PORT);
