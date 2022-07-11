@@ -9,7 +9,7 @@ import { request } from 'express';
 dotenv.config();
 
 const app = express();
-const PORT= 4000;
+const PORT= process.env.PORT;
 // const movies=[
 
 //     {
@@ -117,6 +117,22 @@ const movie= await client.db("guvi-node-app").collection("movies").findOne({id:i
 console.log(movie);
 movie?res.send(movie):res.status(404).send({msg:"movie not found"});
   })
+
+  app.delete('/movies/:id', async function (req, res) {
+    const {id} = req.params;
+          // const movie=movies.find((mv)=>mv.id===id);
+    const result= await client.db("guvi-node-app").collection("movies").deleteOne({id:id});
+    result.deletedCount>0?res.send({msg:"movie deleted successfully"}):res.status(404).send({msg:"movie not found"});
+      })
+
+app.put('/movies/:id', async function (req, res) {
+  const {id} = req.params;
+  const data=req.body;
+        // const movie=movies.find((mv)=>mv.id===id);
+  const result= await client.db("guvi-node-app").collection("movies").updateOne({id:id},{$set:data});
+  res.send(result);
+    })
+
 // express.json() is a inbuilt middleware to convert data inside body to json format.
 app.post('/movies',async function (req, res) {
   const data=req.body;
