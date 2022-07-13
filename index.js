@@ -5,6 +5,7 @@ import express from 'express';
 import { MongoClient } from 'mongodb';
 import dotenv from "dotenv";
 import {moviesRouter} from "./routes/movies.js";
+import cors from "cors";
 dotenv.config();
 
 const app = express();
@@ -79,6 +80,7 @@ const PORT= process.env.PORT;
 //     ]
 //This will intercept all the requests and convert body to json format.
     app.use(express.json());
+    app.use(cors());
 
     // const MONGO_URL="mongodb://127.0.0.1"
 
@@ -100,4 +102,4 @@ app.get('/', function (req, res) {
 app.use("/movies",moviesRouter);
 
 //cursor - Pagination | cursor --> Array | toArray()
-app.listen(PORT);
+app.listen(PORT,()=>console.log("App started in port number::",PORT));
