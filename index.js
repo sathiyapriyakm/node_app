@@ -5,8 +5,10 @@ import express from 'express';
 import { MongoClient } from 'mongodb';
 import dotenv from "dotenv";
 import {moviesRouter} from "./routes/movies.js";
+import {usersRouter} from "./routes/users.js";
 import cors from "cors";
 dotenv.config();
+
 
 const app = express();
 const PORT= process.env.PORT;
@@ -100,6 +102,7 @@ app.get('/', function (req, res) {
   res.send('Hello, Welcome to the APP')
 })
 app.use("/movies",moviesRouter);
+app.use("/users",usersRouter);
 
 //cursor - Pagination | cursor --> Array | toArray()
-app.listen(PORT,()=>console.log("App started in port number::",PORT));
+app.listen(PORT,()=>console.log("App started in port number::",PORT)); 

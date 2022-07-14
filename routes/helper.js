@@ -16,3 +16,11 @@ export async function getMovieById(id) {
 export async function getAllMovies(request) {
     return await client.db("guvi-node-app").collection("movies").find(request.query).toArray();
 }
+export async function createUser(data) {
+      //db.users.insertOne(data);
+    return await client.db("guvi-node-app").collection("users").insertOne(data);
+}
+export async function getUserByName(username) {
+      //db.users.findOne({username: username });
+    return await client.db("guvi-node-app").collection("users").findOne({ username: username });
+}
