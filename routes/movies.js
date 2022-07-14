@@ -1,9 +1,9 @@
 import express from "express";
 import { auth } from "../middleware/auth.js";
-import { getAllMovies, getMovieById, deleteMovieById, updateMovieById, createNewMovies } from "./helper.js";
+import { getAllMovies, getMovieById, deleteMovieById, updateMovieById, createNewMovies,createOneNewMovie } from "./helper.js";
 const router =express.Router();
 
-router.get('/',/* auth ,*/ async function (request, response) {
+router.get('/',async function (request, response) {
     //db.movies.find({});
     if(request.query.rating){
       request.query.rating = +request.query.rating;
@@ -44,6 +44,13 @@ router.get('/',/* auth ,*/ async function (request, response) {
     const result=await createNewMovies(data);
     response.send(result);
     })
+    router.post('/add',async function (request, response) {
+      const data=request.body;
+      console.log(data);
+      //db.movies.insertMany(data);
+      const result=await createOneNewMovie(data);
+      response.send(result);
+      })
 
     export const moviesRouter=router;
   
