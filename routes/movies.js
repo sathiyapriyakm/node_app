@@ -3,7 +3,7 @@ import { auth } from "../middleware/auth.js";
 import { getAllMovies, getMovieById, deleteMovieById, updateMovieById, createNewMovies } from "./helper.js";
 const router =express.Router();
 
-router.get('/',auth, async function (request, response) {
+router.get('/',/*auth, */ async function (request, response) {
     //db.movies.find({});
     if(request.query.rating){
       request.query.rating = +request.query.rating;
