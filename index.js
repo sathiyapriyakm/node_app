@@ -11,7 +11,7 @@ dotenv.config();
 
 
 const app = express();
-const PORT= process.env.PORT;
+// const PORT= process.env.PORT;
 // const movies=[
 
 //     {
@@ -105,4 +105,4 @@ app.use("/movies",moviesRouter);
 app.use("/users",usersRouter);
 
 //cursor - Pagination | cursor --> Array | toArray()
-app.listen(PORT,()=>console.log("App started in port number::",PORT)); 
+app.listen(process.env.PORT || 5000,()=>console.log("App started in port number::")); 
